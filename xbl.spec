@@ -1,8 +1,13 @@
 Summary:	3D geometry game
+Summary(de):	3D-Geometriespiel
+Summary(es):	Juego geométrico en 3D
+Summary(fr):	Jeu en géometrie 3D.
 Summary(pl):	Trójwymiarowa gra na zasadach tetrisa
+Summary(pt_BR):	Jogo geométrico em 3d
+Summary(tr):	Üç boyutlu geometri oyunu
 Name:		xbl
 Version:	1.0j
-Release:	7
+Release:	8
 License:	GPL
 Group:		X11/Applications/Games
 Source0:	ftp://ftp710.univ-lyon1.fr/pub/xbl/%{name}-%{version}.tar.Z
@@ -20,8 +25,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 A three dimensional version of a popular arcade game.
 
+%description -l es
+Una versión en tres dimensiones de un popular juego del tipo arcade.
+
+%description -l de
+Eine 3D-Version eines beliebten Spielhallen-Games.
+
+%description -l fr
+Version tri-dimensionnelle d'un célèbre jeu d'arcade.
+
 %description -l pl
 Trójwymiarowa wersja popularnej gry.
+
+%description -l pt_BR
+Uma versão em três dimensões de um popular jogo do tipo arcade.
+
+%description -l tr
+Popüler oyunun üç boyutlu bir sürümü.
 
 %prep
 %setup -q
@@ -41,16 +61,14 @@ install -d $RPM_BUILD_ROOT{%{_applnkdir}/Games,%{_pixmapsdir}}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Games
 install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 
-gzip -9nf README xbl-README
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README xbl-README
 %attr(2755,root,games) %{_bindir}/xbl
-%config %{_libdir}/X11/app-defaults/*
+%{_libdir}/X11/app-defaults/*
 %{_mandir}/man6/xbl.6*
 %{_applnkdir}/Games/xbl.desktop
 %{_pixmapsdir}/*
