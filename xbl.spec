@@ -11,6 +11,7 @@ Release:	8
 License:	GPL
 Group:		X11/Applications/Games
 Source0:	ftp://ftp710.univ-lyon1.fr/pub/xbl/%{name}-%{version}.tar.Z
+# Source0-md5:	72c7775e2ea57f61ce4ca3c71a2b7ae7
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-config.patch
