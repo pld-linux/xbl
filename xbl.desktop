@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=xbl
+Comment=3d Geometry Game
+Comment[pl]=3d Tetris
+Exec=xbl
+Terminal=0
+Type=Application

@@ -1,0 +1,183 @@
+--- xbl-1.0j/bl.c.orig	Mon Aug 14 00:47:26 2000
++++ xbl-1.0j/bl.c	Mon Aug 14 00:48:24 2000
+@@ -285,8 +285,10 @@
+ sprintf(buf,"%s/Xbl",RESOURCEDIR) ;
+ getres( XrmGetFileDatabase(buf) , allargs ) ;
+ 
++/*
+ sprintf(buf,"%s/Xbl",SCOREDIR) ;
+ getres( XrmGetFileDatabase(buf) , allargs ) ;
++*/
+ 
+ /* I don't remember why these lines should be commented....
+ 
+--- xbl-1.0j/buttons.c.orig	Mon Aug 14 00:48:30 2000
++++ xbl-1.0j/buttons.c	Mon Aug 14 00:52:04 2000
+@@ -318,27 +318,7 @@
+ struct moving_button *b ;
+ int but ;
+ {
+-char buf[LINE_LENGTH] ;
+-FILE *f ;
+-
+ XFlush(b->menu->bl->x.display) ;
+-sprintf(buf,"%s/COPYING",SCOREDIR) ;
+-f = fopen( buf,"r" ) ;
+-
+-if ( f==0 )
+-	{
+-	fprintf(stderr,"Please install copyright file %s\n",buf) ;
+-	return ;
+-	}
+-
+-do
+-	{
+-	fgets(buf,LINE_LENGTH-1,f) ;
+-	if ( feof(f) ) break ;
+-	printf("%s",buf) ;
+-	}
+-while(!feof(f)) ;
+-fclose(f) ;
+ }
+ /**************************************************************************/
+ /**************************************************************************/
+--- xbl-1.0j/Makefile.in.config	Thu Nov 12 22:57:13 1998
++++ xbl-1.0j/Makefile.in	Mon Aug 14 01:06:38 2000
+@@ -11,10 +11,10 @@
+ 
+ # If xbl must NOT run with SGID bit (for protect scores files) then
+ # comment next line
+-USE_SETGID=-DUSE_SETGID
++# USE_SETGID=-DUSE_SETGID
+ 
+ # group owner of games file
+-GROUP_GID=2
++GROUP_GID=20
+ 
+ ###########################################################################
+ # You don't need to read below if you have xmkmf or imake
+@@ -22,34 +22,32 @@
+ ###########################################################################
+ 
+ # Comment next line if you don't want to use "xmkmf" informations.
+-USE_XMKMF=YES
++# USE_XMKMF=YES
+ # Comment next line if you don't want to use "imake" informations.
+-IMAKE_OPTIONS=-DTOP=/ -DUseInstalled
++# IMAKE_OPTIONS=-DTOP=/ -DUseInstalled
++
++DESTDIR=
+ 
+ # Directory who contain X Resource Database
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-RESOURCEDIR=/usr/lib/X11/app-defaults
+-@XAPPLOADDIR@
++RESOURCEDIR=$(DESTDIR)/usr/X11R6/lib/X11/app-defaults
+ 
+ # Directory where install binary
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-BINDIR=/usr/local/bin
+-@BINDIR@
++BINDIR=$(DESTDIR)/usr/X11R6/bin
+ 
+ # Directory who contain score
+ # Put your HOME if you have a private use of the game
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-SCOREDIR=/usr/local/lib/xbl
+-@SCOREDIR@
++SCOREDIR=$(DESTDIR)/var/lib/games/xbl
+ 
+ # Directory where put man pages.
+ # The default value if overrided by configure if xmkmf or imake exists.
+ #
+-MANPATH=/usr/local/man
+-@MANPATH@
++MANPATH=$(DESTDIR)/usr/X11R6/man
+ 
+ ###########################################################################
+ # Some values defined in imakefiles
+@@ -82,7 +80,7 @@
+ 
+ # For linking (configure script will modify this line)
+ # xmkmf et imake informations are take into account.
+-LIBS = @LIBS@ -lm
++LIBS = -L/usr/X11R6/lib -lXext -lX11 -lm
+ 
+ all:demo
+ 
+@@ -93,7 +91,7 @@
+ 	 -DRESOURCEDIR=\"$(RESOURCEDIR)\" \
+ 	 -DXBLVERSION=\"$(XBLVERSION)\" \
+ 	 -DGROUP_GID=$(GROUP_GID) \
+-	  $(USE_SETGID) @DEFS@ -g
++	  $(USE_SETGID) @DEFS@ $(RPM_OPT_FLAGS)
+ # For link edit options
+ LDOPTIONS=$(CFLAGS)
+ LDOPTIONS=@LDOPTIONS@
+@@ -123,28 +121,16 @@
+ 	@echo "Executable go in $(BINDIR)"
+ 	@echo "Scores     go in $(SCOREDIR)"
+ 	@echo "Defaults   go in $(RESOURCEDIR)/Xbl"
+-	@echo "Man pages  go in $(MANPATH)/mann or man1"
++	@echo "Man pages  go in $(MANPATH)/man6"
+ 	@-if [ "" != "$(USE_SETGID)" ] ; then \
+ 		echo "You use GID=$(GROUP_GID) protection" ; \
+ 		fi
+ 	@echo "Type <Return> to continue installation"
+ 	@echo "Type NO       to stop installation"
+-	@read LINE && test "" = "$$LINE"
+-	#
+-	# Remove old score file
+-	#
+-	@-if [ -d "$(SCOREDIR)" ] ; \
+-		then \
+-		echo "The scoring method and speeds of Xbl had change" ; \
+-		echo "If your version is older than 0.2e, destroy score." ; \
+-		echo "Type <Return> to destroy old score files" ; \
+-		echo "Type NO       to hold old score files" ; \
+-		read LINE && test "" = "$$LINE" && rm $(SCOREDIR)/[1-9]* ; \
+-		exit 0 ; \
+-		fi
+ 	#
+ 	# Install executable
+ 	#
++	-mkdir -p $(BINDIR)
+ 	$(CP) bl $(BINDIR)/xbl	
+ 	-if [ "" = "$(USE_SETGID)" ] ; then \
+ 	     chmod 755  $(BINDIR)/xbl ;\
+@@ -157,9 +143,9 @@
+ 	# Install executable
+ 	#
+ 	-mkdir $(SCOREDIR) 2>/dev/null
++	-mkdir -p $(RESOURCEDIR) $(SCOREDIR)
+ 	$(CP) Xbl.ad  $(RESOURCEDIR)/Xbl ;	chmod 644 $(RESOURCEDIR)/Xbl
+ 	$(CP) Xbl.ad  $(SCOREDIR)/Xbl ;		chmod 644 $(SCOREDIR)/Xbl
+-	$(CP) COPYING  $(SCOREDIR) ;		chmod 444 $(SCOREDIR)/COPYING
+ 	-if [ "" = "$(USE_SETGID)" ] ; then \
+ 	     chmod 777 $(SCOREDIR) ;\
+ 	     chmod 666 $(SCOREDIR)/[1-9]* ;\
+@@ -172,17 +158,15 @@
+ 	#
+ 	# Install manual pages
+ 	#
+-	-if [ -d $(MANPATH)/mann ] ; \
++	-mkdir -p $(MANPATH)/man6
++	-if [ -d $(MANPATH)/man6 ] ; \
+ 		then \
+-		$(CP) xbl.man $(MANPATH)/mann/xbl.n ;\
+-		chmod 444 $(MANPATH)/mann/xbl.n ; \
++		$(CP) xbl.man $(MANPATH)/man6/xbl.6x ;\
++		chmod 444 $(MANPATH)/man6/xbl.6x ; \
+ 	   else \
+ 		$(CP) xbl.man $(MANPATH)/man1/xbl.1 ;\
+ 		chmod 444 $(MANPATH)/man1/xbl.1 ; \
+ 		fi
+-	cp *.gif *.html $(SCOREDIR)
+-	#
+-	-ls -lsa $(SCOREDIR) $(BINDIR)/xbl $(MANPATH)/man[1n]/xbl.[1n]
+ 	@echo "Type xbl to play"
+ 
+ bl:$(OBJ)
