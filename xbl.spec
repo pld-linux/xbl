@@ -28,7 +28,7 @@ Trójwymiarowa wersja popularnej gry.
 %patch -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure
 %{__make}
 
