@@ -5,8 +5,6 @@ Version:	1.0j
 Release:	7
 License:	GPL
 Group:		X11/Applications/Games
-Group(de):	X11/Applikationen/Spiele
-Group(pl):	X11/Aplikacje/Gry
 Source0:	ftp://ftp710.univ-lyon1.fr/pub/xbl/%{name}-%{version}.tar.Z
 Source1:	%{name}.desktop
 Source2:	%{name}.png
