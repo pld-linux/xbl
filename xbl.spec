@@ -9,6 +9,7 @@ Group(de):	X11/Applikationen/Spiele
 Group(pl):	X11/Aplikacje/Gry
 Source0:	ftp://ftp710.univ-lyon1.fr/pub/xbl/%{name}-%{version}.tar.Z
 Source1:	%{name}.desktop
+Source2:	%{name}.png
 Patch0:		%{name}-config.patch
 URL:		http://www710.univ-lyon1.fr/ftp/xbl/xbl.html
 BuildRequires:	autoconf
@@ -34,10 +35,12 @@ autoconf
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_applnkdir}/Games,%{_pixmapsdir}}
+
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_applnkdir}/Games
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Games
+install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 gzip -9nf README xbl-README
 
@@ -51,5 +54,6 @@ rm -rf $RPM_BUILD_ROOT
 %config %{_libdir}/X11/app-defaults/*
 %{_mandir}/man6/xbl.6*
 %{_applnkdir}/Games/xbl.desktop
+%{_pixmapsdir}/*
 # score files are owner by first player - so don't allow him to modify...
 %attr(770,root,games) %dir /var/games/xbl
