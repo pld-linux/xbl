@@ -48,7 +48,7 @@
  # If xbl must NOT run with SGID bit (for protect scores files) then
  # comment next line
 -USE_SETGID=-DUSE_SETGID
-+# USE_SETGID=-DUSE_SETGID
++USE_SETGID=-DUSE_SETGID
  
  # group owner of games file
 -GROUP_GID=2
@@ -88,7 +88,7 @@
  #
 -SCOREDIR=/usr/local/lib/xbl
 -@SCOREDIR@
-+SCOREDIR=$(DESTDIR)/var/lib/games/xbl
++SCOREDIR=$(DESTDIR)/var/games/xbl
  
  # Directory where put man pages.
  # The default value if overrided by configure if xmkmf or imake exists.
