@@ -2,6 +2,7 @@
 Name=Xbl
 Comment=3d Geometry Game
 Comment[pl]=Trójwymiarowe Tetris
+Icon=xbl.png
 Exec=xbl
 Terminal=0
 Type=Application
