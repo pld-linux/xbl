@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=xbl
+Name=Xbl
 Comment=3d Geometry Game
-Comment[pl]=3d Tetris
+Comment[pl]=Trójwymiarowe Tetris
 Exec=xbl
 Terminal=0
 Type=Application
