@@ -1,62 +1,39 @@
---- xbl-1.0j/bl.c.orig	Mon Aug 14 00:47:26 2000
-+++ xbl-1.0j/bl.c	Mon Aug 14 00:48:24 2000
-@@ -285,8 +285,10 @@
- sprintf(buf,"%s/Xbl",RESOURCEDIR) ;
- getres( XrmGetFileDatabase(buf) , allargs ) ;
+--- xbl-1.1.2/bl.c.orig	2003-08-31 21:59:38.000000000 +0200
++++ xbl-1.1.2/bl.c	2004-04-10 00:13:26.974843528 +0200
+@@ -306,8 +306,10 @@
+   sprintf(buf,"%s/Xbl",RESOURCEDIR) ;
+   getres( XrmGetFileDatabase(buf) , allargs ) ;
  
-+/*
- sprintf(buf,"%s/Xbl",SCOREDIR) ;
- getres( XrmGetFileDatabase(buf) , allargs ) ;
-+*/
++  /*
+   sprintf(buf,"%s/Xbl",SCOREDIR) ;
+   getres( XrmGetFileDatabase(buf) , allargs ) ;
++  */
  
- /* I don't remember why these lines should be commented....
+   /* I don't remember why these lines should be commented....
  
---- xbl-1.0j/buttons.c.orig	Mon Aug 14 00:48:30 2000
-+++ xbl-1.0j/buttons.c	Mon Aug 14 00:52:04 2000
-@@ -318,27 +318,7 @@
- struct moving_button *b ;
- int but ;
- {
--char buf[LINE_LENGTH] ;
--FILE *f ;
--
- XFlush(b->menu->bl->x.display) ;
--sprintf(buf,"%s/COPYING",SCOREDIR) ;
--f = fopen( buf,"r" ) ;
--
--if ( f==0 )
--	{
--	fprintf(stderr,"Please install copyright file %s\n",buf) ;
--	return ;
--	}
--
--do
--	{
--	fgets(buf,LINE_LENGTH-1,f) ;
--	if ( feof(f) ) break ;
--	printf("%s",buf) ;
--	}
--while(!feof(f)) ;
--fclose(f) ;
- }
- /**************************************************************************/
- /**************************************************************************/
---- xbl-1.0j/Makefile.in.config	Thu Nov 12 22:57:13 1998
-+++ xbl-1.0j/Makefile.in	Mon Aug 14 01:06:38 2000
-@@ -11,10 +11,10 @@
+--- xbl-1.1.2/buttons.c.orig	2003-06-29 15:40:35.000000000 +0200
++++ xbl-1.1.2/buttons.c	2004-04-10 00:17:01.872174168 +0200
+@@ -318,7 +318,7 @@
+   FILE *f ;
  
- # If xbl must NOT run with SGID bit (for protect scores files) then
- # comment next line
--USE_SETGID=-DUSE_SETGID
-+USE_SETGID=-DUSE_SETGID
+   XFlush(b->menu->bl->x.display) ;
+-  sprintf(buf,"%s/COPYING",SCOREDIR) ;
++  sprintf(buf,"/usr/share/xbl/COPYING") ;
+   f = fopen( buf,"r" ) ;
  
- # group owner of games file
--GROUP_GID=2
+   if ( f==0 )
+--- xbl-1.1.2/Makefile.in.orig	2003-08-31 21:59:38.000000000 +0200
++++ xbl-1.1.2/Makefile.in	2004-04-10 00:20:13.222084560 +0200
+@@ -14,7 +14,7 @@
+ USE_SETGID=-DUSE_SETGID
+ 
+ # group owner of games file.
+-GROUP_GID=5
 +GROUP_GID=20
+ @GROUP_GID@
  
  ###########################################################################
- # You don't need to read below if you have xmkmf or imake
-@@ -22,34 +22,32 @@
+@@ -23,34 +23,32 @@
  ###########################################################################
  
  # Comment next line if you don't want to use "xmkmf" informations.
@@ -80,7 +57,7 @@
  #
 -BINDIR=/usr/local/bin
 -@BINDIR@
-+BINDIR=$(DESTDIR)/usr/X11R6/bin
++BINDIR=$(DESTDIR)/usr/bin
  
  # Directory who contain score
  # Put your HOME if you have a private use of the game
@@ -95,29 +72,29 @@
  #
 -MANPATH=/usr/local/man
 -@MANPATH@
-+MANPATH=$(DESTDIR)/usr/X11R6/man
++MANPATH=$(DESTDIR)/usr/share/man
  
  ###########################################################################
  # Some values defined in imakefiles
-@@ -82,7 +80,7 @@
+@@ -83,7 +81,7 @@
  
  # For linking (configure script will modify this line)
  # xmkmf et imake informations are take into account.
 -LIBS = @LIBS@ -lm
-+LIBS = -L/usr/X11R6/lib -lXext -lX11 -lm
++LIBS = $(LXLIBDIR) -lXext -lX11 -lm
  
  all:demo
  
-@@ -93,7 +91,7 @@
+@@ -94,7 +92,7 @@
  	 -DRESOURCEDIR=\"$(RESOURCEDIR)\" \
  	 -DXBLVERSION=\"$(XBLVERSION)\" \
  	 -DGROUP_GID=$(GROUP_GID) \
--	  $(USE_SETGID) @DEFS@ -g
-+	  $(USE_SETGID) @DEFS@ $(RPM_OPT_FLAGS)
+-	  $(USE_SETGID) @DEFS@ @CFLA@ -g
++	  $(USE_SETGID) @DEFS@ @CFLA@ @CFLAGS@
  # For link edit options
  LDOPTIONS=$(CFLAGS)
  LDOPTIONS=@LDOPTIONS@
-@@ -123,28 +121,16 @@
+@@ -124,28 +122,16 @@
  	@echo "Executable go in $(BINDIR)"
  	@echo "Scores     go in $(SCOREDIR)"
  	@echo "Defaults   go in $(RESOURCEDIR)/Xbl"
@@ -148,18 +125,19 @@
  	$(CP) bl $(BINDIR)/xbl	
  	-if [ "" = "$(USE_SETGID)" ] ; then \
  	     chmod 755  $(BINDIR)/xbl ;\
-@@ -157,9 +143,9 @@
+@@ -158,9 +144,10 @@
  	# Install executable
  	#
  	-mkdir $(SCOREDIR) 2>/dev/null
-+	-mkdir -p $(RESOURCEDIR) $(SCOREDIR)
++	-mkdir -p $(RESOURCEDIR) $(SCOREDIR) $(DESTDIR)/usr/share/xbl
  	$(CP) Xbl.ad  $(RESOURCEDIR)/Xbl ;	chmod 644 $(RESOURCEDIR)/Xbl
  	$(CP) Xbl.ad  $(SCOREDIR)/Xbl ;		chmod 644 $(SCOREDIR)/Xbl
 -	$(CP) COPYING  $(SCOREDIR) ;		chmod 444 $(SCOREDIR)/COPYING
++	$(CP) COPYING $(DESTDIR)/usr/share/xbl
  	-if [ "" = "$(USE_SETGID)" ] ; then \
  	     chmod 777 $(SCOREDIR) ;\
  	     chmod 666 $(SCOREDIR)/[1-9]* ;\
-@@ -172,17 +158,15 @@
+@@ -173,17 +160,15 @@
  	#
  	# Install manual pages
  	#
