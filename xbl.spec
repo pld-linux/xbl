@@ -1,7 +1,7 @@
 Summary:	3D geometry game
 Summary(de):	3D-Geometriespiel
 Summary(es):	Juego geométrico en 3D
-Summary(fr):	Jeu en géometrie 3D.
+Summary(fr):	Jeu en géometrie 3D
 Summary(pl):	Trójwymiarowa gra na zasadach tetrisa
 Summary(pt_BR):	Jogo geométrico em 3d
 Summary(tr):	Üç boyutlu geometri oyunu
