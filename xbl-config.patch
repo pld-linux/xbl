@@ -50,7 +50,7 @@
  #
 -RESOURCEDIR=/usr/lib/X11/app-defaults
 -@XAPPLOADDIR@
-+RESOURCEDIR=$(DESTDIR)/usr/X11R6/lib/X11/app-defaults
++RESOURCEDIR=$(DESTDIR)/usr/share/X11/app-defaults
  
  # Directory where install binary
  # The default value if overrided by configure if xmkmf or imake exists.
@@ -81,7 +81,7 @@
  # For linking (configure script will modify this line)
  # xmkmf et imake informations are take into account.
 -LIBS = @LIBS@ -lm
-+LIBS = $(LXLIBDIR) -lXext -lX11 -lm
++LIBS = -lXext -lX11 -lm
  
  all:demo
  
