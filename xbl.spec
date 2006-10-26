@@ -6,21 +6,21 @@ Summary(pl):	Trójwymiarowa gra na zasadach tetrisa
 Summary(pt_BR):	Jogo geométrico em 3d
 Summary(tr):	Üç boyutlu geometri oyunu
 Name:		xbl
-Version:	1.1.2
+Version:	1.1.4
 Release:	1
 License:	GPL
 Group:		X11/Applications/Games
-Source0:	ftp://ftp710.univ-lyon1.fr/pub/xbl/%{name}-%{version}.tar.gz
-# Source0-md5:	81b918d78c1f78ff05cdaab9f4589538
+Source0:	http://www710.univ-lyon1.fr/ftp/xbl/%{name}-%{version}.tar.gz
+# Source0-md5:	217127882e5999f8b20c499d24e2ee04
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-config.patch
 URL:		http://www710.univ-lyon1.fr/ftp/xbl/xbl.html
-BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
+BuildRequires:	xorg-lib-libXext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
+%define		_appdefsdir	%{_datadir}/X11/app-defaults
 
 %description
 A three dimensional version of a popular arcade game.
@@ -50,8 +50,7 @@ Popüler oyunun üç boyutlu bir sürümü.
 %build
 %{__autoconf}
 %configure
-%{__make} \
-	LXLIBDIR="-L/usr/X11R6/%{_lib}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -62,6 +61,9 @@ install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
+
+# just copy of app-defaults
+rm -f $RPM_BUILD_ROOT/var/games/xbl/Xbl
 
 %clean
 rm -rf $RPM_BUILD_ROOT
