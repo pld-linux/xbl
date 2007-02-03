@@ -6,12 +6,12 @@ Summary(pl):	Trójwymiarowa gra na zasadach tetrisa
 Summary(pt_BR):	Jogo geométrico em 3d
 Summary(tr):	Üç boyutlu geometri oyunu
 Name:		xbl
-Version:	1.1.4
+Version:	1.1.5
 Release:	1
 License:	GPL
 Group:		X11/Applications/Games
 Source0:	http://www710.univ-lyon1.fr/ftp/xbl/%{name}-%{version}.tar.gz
-# Source0-md5:	217127882e5999f8b20c499d24e2ee04
+# Source0-md5:	f618cb6fc20314683c20679d063e1b37
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-config.patch
