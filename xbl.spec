@@ -1,10 +1,10 @@
 Summary:	3D geometry game
-Summary(de.UTF-8):   3D-Geometriespiel
-Summary(es.UTF-8):   Juego geométrico en 3D
-Summary(fr.UTF-8):   Jeu en géometrie 3D
-Summary(pl.UTF-8):   Trójwymiarowa gra na zasadach tetrisa
-Summary(pt_BR.UTF-8):   Jogo geométrico em 3d
-Summary(tr.UTF-8):   Üç boyutlu geometri oyunu
+Summary(de.UTF-8):	3D-Geometriespiel
+Summary(es.UTF-8):	Juego geométrico en 3D
+Summary(fr.UTF-8):	Jeu en géometrie 3D
+Summary(pl.UTF-8):	Trójwymiarowa gra na zasadach tetrisa
+Summary(pt_BR.UTF-8):	Jogo geométrico em 3d
+Summary(tr.UTF-8):	Üç boyutlu geometri oyunu
 Name:		xbl
 Version:	1.1.5
 Release:	1
