@@ -1,10 +1,10 @@
 Summary:	3D geometry game
-Summary(de):	3D-Geometriespiel
-Summary(es):	Juego geométrico en 3D
-Summary(fr):	Jeu en géometrie 3D
-Summary(pl):	Trójwymiarowa gra na zasadach tetrisa
-Summary(pt_BR):	Jogo geométrico em 3d
-Summary(tr):	Üç boyutlu geometri oyunu
+Summary(de.UTF-8):   3D-Geometriespiel
+Summary(es.UTF-8):   Juego geomÃ©trico en 3D
+Summary(fr.UTF-8):   Jeu en gÃ©ometrie 3D
+Summary(pl.UTF-8):   TrÃ³jwymiarowa gra na zasadach tetrisa
+Summary(pt_BR.UTF-8):   Jogo geomÃ©trico em 3d
+Summary(tr.UTF-8):   ÃœÃ§ boyutlu geometri oyunu
 Name:		xbl
 Version:	1.1.5
 Release:	1
@@ -25,23 +25,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 A three dimensional version of a popular arcade game.
 
-%description -l es
-Una versión en tres dimensiones de un popular juego del tipo arcade.
+%description -l es.UTF-8
+Una versiÃ³n en tres dimensiones de un popular juego del tipo arcade.
 
-%description -l de
+%description -l de.UTF-8
 Eine 3D-Version eines beliebten Spielhallen-Games.
 
-%description -l fr
-Version tri-dimensionnelle d'un célèbre jeu d'arcade.
+%description -l fr.UTF-8
+Version tri-dimensionnelle d'un cÃ©lÃ¨bre jeu d'arcade.
 
-%description -l pl
-Trójwymiarowa wersja popularnej gry.
+%description -l pl.UTF-8
+TrÃ³jwymiarowa wersja popularnej gry.
 
-%description -l pt_BR
-Uma versão em três dimensões de um popular jogo do tipo arcade.
+%description -l pt_BR.UTF-8
+Uma versÃ£o em trÃªs dimensÃµes de um popular jogo do tipo arcade.
 
-%description -l tr
-Popüler oyunun üç boyutlu bir sürümü.
+%description -l tr.UTF-8
+PopÃ¼ler oyunun Ã¼Ã§ boyutlu bir sÃ¼rÃ¼mÃ¼.
 
 %prep
 %setup -q
