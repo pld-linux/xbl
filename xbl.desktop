@@ -2,10 +2,9 @@
 Name=Xbl
 Comment=3d Geometry Game
 Comment[pl]=Trójwymiarowe Tetris
-Icon=xbl.png
+Icon=xbl
 Exec=xbl
 Terminal=false
 Type=Application
-Encoding=UTF-8
 Categories=Game;ArcadeGame;
 # vi: encoding=utf-8
