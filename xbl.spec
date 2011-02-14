@@ -7,7 +7,7 @@ Summary(pt_BR.UTF-8):	Jogo geométrico em 3d
 Summary(tr.UTF-8):	Üç boyutlu geometri oyunu
 Name:		xbl
 Version:	1.1.5
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Games
 Source0:	http://www710.univ-lyon1.fr/ftp/xbl/%{name}-%{version}.tar.gz
